@@ -138,9 +138,12 @@ em { font-style: italic; }
 /* ─── Portada ───────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: 100vh; min-height: 100svh;
+  /* Exactamente una pantalla de alto; los tamaños dependen también de la altura,
+     para que en portátiles bajos la bola no se pegue al texto ni se salga */
+  height: 100vh; height: 100svh; min-height: 540px;
+  --bola-bottom: clamp(24px, 6vh, 56px);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 120px var(--pad) 160px;
+  text-align: center; padding: clamp(72px, 12vh, 120px) var(--pad) calc(var(--bola-bottom) + 45px + clamp(56px, 11vh, 110px));
   overflow: hidden;
 }
 /* Con GSAP, portada y «Sobre mí» se apilan en el mismo sitio. «Sobre mí» va encima,
@@ -161,16 +164,16 @@ em { font-style: italic; }
   clip-path: circle(0 at 50% 100%);
 }
 .hero__kicker {
-  display: flex; gap: 32px; justify-content: center; margin-bottom: 32px;
+  display: flex; gap: 32px; justify-content: center; margin-bottom: clamp(14px, 3.5vh, 32px);
   font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3);
 }
 .hero__name { display: flex; flex-direction: column; align-items: center; line-height: 0.95; letter-spacing: -0.035em; }
-.hero__first { font-weight: 800; font-size: clamp(64px, 13vw, 200px); }
-.hero__last  { font-weight: 100; font-size: clamp(38px, 7.6vw, 118px); letter-spacing: -0.03em; }
+.hero__first { font-weight: 800; font-size: clamp(52px, min(13vw, 19vh), 200px); }
+.hero__last  { font-weight: 100; font-size: clamp(32px, min(7.6vw, 11vh), 118px); letter-spacing: -0.03em; }
 .hero__name .char { display: inline-block; will-change: transform; }
 .hero__name .line-mask, .chapter__title .line-mask, .epilogo__title .line-mask { overflow: clip; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 
-.wrapped { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 36px; font-size: clamp(20px, 2.6vw, 30px); }
+.wrapped { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: clamp(16px, 4vh, 36px); font-size: clamp(18px, min(2.6vw, 3.6vh), 30px); }
 .wrapped__lead { font-weight: 400; }
 .palabras { position: relative; height: 1.4em; overflow: hidden; text-align: left; font-weight: 200; }
 .palabras span { display: block; height: 1.4em; line-height: 1.4em; }
@@ -185,9 +188,9 @@ html:not(.gsap) .palabras span { animation: spin_words 10s infinite; }
   100%     { transform: translateY(-500%); }
 }
 
-.hero__hint { position: absolute; bottom: 120px; left: 0; right: 0; font-size: 13px; color: var(--ink-3); letter-spacing: 0.04em; }
+.hero__hint { position: absolute; bottom: calc(var(--bola-bottom) + 45px + 20px); left: 0; right: 0; font-size: 13px; color: var(--ink-3); letter-spacing: 0.04em; }
 .bola {
-  position: absolute; bottom: 56px; left: 50%;
+  position: absolute; bottom: var(--bola-bottom); left: 50%;
   width: 45px; height: 45px; margin-left: -22.5px;
   border-radius: 50%; background: var(--navy);
   box-shadow: 0 0 0 0 rgba(15, 23, 42, 0.14);
