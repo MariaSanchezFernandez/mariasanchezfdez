@@ -140,7 +140,7 @@ function runLoader(lenis, intro, midPage) {
   lenis?.stop();
   // A mitad de página la entrada de la portada no se ve: se deja terminada para que
   // la bola no "caiga" mientras el scroll la tiene agrandada
-  if (midPage) intro.progress(1);
+  if (midPage) { intro.progress(1); headerTheme.circle.setReady(); }
 
   const counter = { v: 0 };
   gsap.timeline({
@@ -168,7 +168,8 @@ function setupHero() {
     .from(last.chars, { yPercent: 110, duration: 1.2, stagger: 0.025 }, '-=1.05')
     .from('.hero__kicker span', { y: 16, opacity: 0, duration: 0.8, stagger: 0.1 }, '-=0.9')
     .from('.wrapped', { y: 24, opacity: 0, duration: 0.9 }, '-=0.7')
-    .from('.bola', { y: -window.innerHeight * 0.6, duration: 1.2, ease: 'bounce.out' }, '-=0.8')
+    // La bola cae desde fuera de la pantalla (antes esperaba encima de las letras)
+    .from('.bola', { y: () => -($('.bola').offsetTop + 90), duration: 1.3, ease: 'bounce.out' }, '-=0.8')
     .from('.hero__hint', { opacity: 0, duration: 0.6 }, '-=0.3')
     .from('.header', { yPercent: -100, opacity: 0, duration: 0.9 }, '-=1.2');
   intro.progress(0).pause(); // aplica los estados iniciales ya, antes de la pantalla de carga
@@ -231,9 +232,11 @@ function setupHero() {
   const content = $('.container', about);
   const roman = $('.chapter__roman', about);
   function setCircle(p) {
+    circle.last = p;
     const t = Math.min(p / OPEN, 1);
     circle.p = t;
-    circle.r = p <= 0 ? 0 : circle.r0 + (circle.r1 - circle.r0) * grow(t);
+    // Hasta que la bola de verdad termina de caer no se dibuja la ventana (evita ver dos bolas)
+    circle.r = p <= 0 || !circle.ready ? 0 : circle.r0 + (circle.r1 - circle.r0) * grow(t);
     draw();
     // El contenido no se ve al principio: aparece a partir de la mitad de la apertura
     const clear = gsap.parseEase('power1.inOut')(gsap.utils.clamp(0, 1, (t - 0.5) / 0.5));
@@ -241,28 +244,37 @@ function setupHero() {
     if (roman) roman.style.opacity = clear;
   }
 
+  // La ventana se activa cuando la bola ya está en su sitio
+  circle.setReady = () => { circle.ready = true; setCircle(circle.last); };
+  intro.eventCallback('onComplete', circle.setReady);
+
   return intro;
 }
 
 /* ─── ¿Hay fondo marino en este punto de la pantalla? ────────── */
 function isDarkAt(x, y) {
   const c = headerTheme.circle;
+  // El footer está fijo detrás de todo: solo se ve (y cuenta) por debajo del final del contacto
+  const footer = $('.site-footer');
+  if (footer && y < $('#contacto').getBoundingClientRect().bottom) footer.dataset.hidden = '';
+  else if (footer) delete footer.dataset.hidden;
   const inside = el => {
     const r = el.getBoundingClientRect();
     return x >= r.left && x <= r.right && y >= r.top && y < r.bottom;
   };
   if ($$('.scard__inner, .idea__send:not(.idea__send--ghost):not(.idea__send--cv), .to-top').some(inside)) return false; // piezas blancas sobre marino
-  // Mientras la ventana de la bola se abre, «Sobre mí» solo cuenta dentro del círculo
-  if (!c.open && c.r > 0) {
+  // Hasta que la ventana de la bola está abierta, «Sobre mí» (que está encima de la portada)
+  // solo cuenta como fondo oscuro dentro del círculo; con el círculo cerrado, nada
+  if (!c.open) {
     const a = $('#sobre-mi').getBoundingClientRect();
-    if (Math.hypot(x - (a.left + c.cx), y - (a.top + c.cy)) <= c.r) return true;
-    return $$('[data-theme="dark"]:not(#sobre-mi), .bola').some(inside);
+    if (c.r > 0 && Math.hypot(x - (a.left + c.cx), y - (a.top + c.cy)) <= c.r) return true;
+    return $$('[data-theme="dark"]:not(#sobre-mi):not([data-hidden]), .bola').some(inside);
   }
-  return $$('[data-theme="dark"], .bola').some(inside);
+  return $$('[data-theme="dark"]:not([data-hidden]), .bola').some(inside);
 }
 
 /* ─── Cabecera: marino sobre blanco, blanco sobre marino ────── */
-const headerTheme = { circle: { r: 0, r0: 22, r1: 0, cx: 0, cy: 0, p: 0, open: false } };
+const headerTheme = { circle: { r: 0, r0: 22, r1: 0, cx: 0, cy: 0, p: 0, open: false, ready: false, last: 0 } };
 function setupHeaderTheme() {
   const header = $('#header');
   const update = () => {
