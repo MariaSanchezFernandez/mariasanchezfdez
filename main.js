@@ -100,6 +100,7 @@ function init() {
   setupContact();
   setupFlairButtons();
   setupCursor();
+  setupTouch();
   setupStackTable();
   setupFooter();
   setupMagnetic();
@@ -401,6 +402,19 @@ function setupFlairButtons() {
       const { x, y } = getXY(e);
       gsap.to(flair, { xPercent: x, yPercent: y, duration: 0.4, ease: 'power2' });
     });
+    // Con el dedo: el relleno sale de donde tocas y se va al soltar
+    btn.addEventListener('pointerdown', e => {
+      if (e.pointerType === 'mouse') return;
+      const { x, y } = getXY(e);
+      gsap.killTweensOf(flair);
+      gsap.fromTo(flair, { xPercent: x, yPercent: y, scale: 0 }, { scale: 1, duration: 0.45, ease: 'power2.out' });
+    });
+    const release = e => {
+      if (e.pointerType === 'mouse') return;
+      gsap.to(flair, { scale: 0, duration: 0.5, delay: 0.25, ease: 'power2.inOut' });
+    };
+    btn.addEventListener('pointerup', release);
+    btn.addEventListener('pointercancel', release);
   });
 }
 
@@ -423,7 +437,8 @@ function setupStackCards() {
   });
 
   // El apilado solo en pantallas donde la tarjeta entera cabe en la ventana
-  gsap.matchMedia().add('(min-width: 861px)', () => {
+  // (en el móvil la tarjeta se ajusta al alto de la pantalla, ver styles.css)
+  gsap.matchMedia().add('(min-width: 861px), (min-height: 560px)', () => {
     cards.slice(0, -1).forEach((card, i) => {
       // La de atrás se encoge un poco y su contenido se apaga; el fondo sigue siendo marino
       const st = { trigger: cards[i + 1], start: 'top bottom', end: 'top 20%', scrub: true };
@@ -490,6 +505,39 @@ function setupCursor() {
   });
 }
 
+/* ─── Toque: lo que en el PC hace el ratón ─────────────────── */
+function setupTouch() {
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  // Una bola aparece donde tocas y se desvanece (el cursor del PC, pero con el dedo)
+  window.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' || e.target.closest('.game')) return;
+    const dot = document.createElement('span');
+    dot.className = 'tap' + (isDarkAt(e.clientX, e.clientY) ? ' on-dark' : '');
+    document.body.appendChild(dot);
+    gsap.fromTo(dot, { x: e.clientX, y: e.clientY, scale: 0.2, opacity: 0.9 },
+      { scale: 1.6, opacity: 0, duration: 0.6, ease: 'power2.out', onComplete: () => dot.remove() });
+  }, { passive: true });
+
+  // Chips del stack: se encienden al tocarlas, como con el ratón encima
+  $$('.tech__list li').forEach(li => li.addEventListener('pointerdown', () => {
+    li.classList.add('is-on');
+    gsap.fromTo(li, { scale: 0.92 }, { scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+    setTimeout(() => li.classList.remove('is-on'), 900);
+  }));
+
+  // Sin ratón, las chips se encienden solas en cascada cuando entran en pantalla
+  $$('.tech__list').forEach(list => {
+    ScrollTrigger.create({
+      trigger: list, start: 'top 70%', once: true,
+      onEnter: () => $$('li', list).forEach((li, i) => {
+        setTimeout(() => li.classList.add('is-on'), 250 + i * 90);
+        setTimeout(() => li.classList.remove('is-on'), 650 + i * 90);
+      }),
+    });
+  });
+}
+
 /* ─── Contacto: entrada del título y la pista ──────────────── */
 function setupContact() {
   gsap.from('.idea__hint, .idea__sentence, .idea__actions, .idea__alt', {
@@ -529,15 +577,22 @@ function setupFooter() {
     scrollTrigger: { trigger: '#contacto', start: 'bottom 75%' },
   });
 
-  // Secreto: las letras saltan al pasar el ratón
-  split.chars.forEach(ch => {
-    ch.addEventListener('mouseenter', () => {
-      if (gsap.isTweening(ch)) return;
-      gsap.timeline()
-        .to(ch, { yPercent: -22, rotate: gsap.utils.random(-8, 8), duration: 0.25, ease: 'power2.out' })
-        .to(ch, { yPercent: 0, rotate: 0, duration: 0.9, ease: 'elastic.out(1.1, 0.35)' });
-    });
-  });
+  // Secreto: las letras saltan al pasar el ratón (o el dedo)
+  const hop = ch => {
+    if (gsap.isTweening(ch)) return;
+    gsap.timeline()
+      .to(ch, { yPercent: -22, rotate: gsap.utils.random(-8, 8), duration: 0.25, ease: 'power2.out' })
+      .to(ch, { yPercent: 0, rotate: 0, duration: 0.9, ease: 'elastic.out(1.1, 0.35)' });
+  };
+  split.chars.forEach(ch => ch.addEventListener('mouseenter', () => hop(ch)));
+  const hopAt = e => {
+    for (const t of e.changedTouches) {
+      const ch = document.elementFromPoint(t.clientX, t.clientY)?.closest('.site-footer__word .char');
+      if (ch) hop(ch);
+    }
+  };
+  word.addEventListener('touchstart', hopAt, { passive: true });
+  word.addEventListener('touchmove', hopAt, { passive: true });
 }
 
 /* ─── Botones magnéticos (volver arriba) ───────────────────── */
@@ -728,6 +783,7 @@ console.log(
       e.preventDefault();
       score++;
       scoreEl.textContent = score;
+      navigator.vibrate?.(15);
       size = Math.max(26, size - 3);
       speed = Math.min(16, speed + 0.8);
       angle = Math.random() * Math.PI * 2;
