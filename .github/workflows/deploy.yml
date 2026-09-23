@@ -1,0 +1,38 @@
+# Publica la web en mariasanchezfdez.es cada vez que se sube algo a main.
+#
+# La clave DEPLOY_SSH_KEY está restringida en el servidor: solo puede ejecutar
+# «git pull» en /var/www/mariasanchezfdez.es, da igual el comando que se le pida.
+name: Publicar en mariasanchezfdez.es
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Preparar la clave SSH
+        run: |
+          install -m 700 -d ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Actualizar la web en el servidor
+        run: ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes root@217.154.107.19 deploy
+
+      - name: Comprobar que la web responde
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://mariasanchezfdez.es/ || true)
+          if [ "$code" != "200" ]; then
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 http://mariasanchezfdez.es/ || true)
+          fi
+          echo "La web responde con $code"
+          test "$code" = "200"

@@ -471,7 +471,9 @@ function setupCursor() {
     el.addEventListener('mouseleave', () => cursor.classList.remove('is-big'));
   });
   $$('a:not([data-cursor]), button').forEach(el => {
-    el.addEventListener('mouseenter', () => gsap.to(cursor, { scale: 2.2, duration: 0.3 }));
+    // En los botones con relleno el cursor se encoge para dejar ver el efecto
+    const scale = el.matches('[data-block="button"]') ? 0.5 : 2.2;
+    el.addEventListener('mouseenter', () => gsap.to(cursor, { scale, duration: 0.3 }));
     el.addEventListener('mouseleave', () => gsap.to(cursor, { scale: 1, duration: 0.3 }));
   });
 }

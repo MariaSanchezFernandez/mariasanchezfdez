@@ -343,17 +343,6 @@ html:not(.gsap) .palabras span { animation: spin_words 10s infinite; }
 .scard__media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.8s var(--ease); }
 a.scard__media:hover img { transform: translateY(-2%); }
 
-/* Fichaje y OlivaTour: dibujos planos, sin brillos */
-.scard__media--art { display: grid; place-content: center; position: relative; background: var(--navy); border-color: var(--navy); color: var(--white); }
-.art-clock { gap: 10px; justify-items: start; }
-.art-clock__time { font-size: clamp(56px, 7vw, 96px); font-weight: 100; letter-spacing: -0.04em; line-height: 1; margin-bottom: 10px; }
-.art-clock__row { display: flex; align-items: center; gap: 10px; min-width: 200px; padding: 10px 16px; border-radius: 12px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--w-line); font-size: 14px; color: var(--w-2); }
-.art-clock__row i { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
-.art-clock__row:nth-child(3) i { opacity: 0.6; }
-.art-clock__row:nth-child(4) i { opacity: 0.3; }
-.art-map { background-image: repeating-linear-gradient(135deg, transparent 0 22px, rgba(255, 255, 255, 0.05) 22px 23px); }
-.art-map__pin { position: absolute; left: var(--x); top: var(--y); width: 22px; height: 22px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--green); }
-.art-map__pin::after { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: var(--navy); }
 
 @media (max-width: 860px) {
   .scard { position: relative; top: 0; }
@@ -428,7 +417,7 @@ a.scard__media:hover img { transform: translateY(-2%); }
 .button__label { position: relative; display: inline-flex; align-items: center; gap: inherit; }
 .button__label > span { transition: transform 0.3s var(--ease); }
 .button__flair { position: absolute; inset: 0; z-index: -1; pointer-events: none; transform: scale(0); transform-origin: 0 0; will-change: transform; }
-.button__flair::before { content: ""; position: absolute; left: 0; top: 0; width: 170%; aspect-ratio: 1; border-radius: 50%; background: var(--green); transform: translate(-50%, -50%); }
+.button__flair::before { content: ""; position: absolute; left: 0; top: 0; width: 230%; aspect-ratio: 1; border-radius: 50%; background: var(--green); transform: translate(-50%, -50%); }
 /* con GSAP el relleno lo pinta el círculo, no el fondo */
 .gsap .header__cv:hover, .gsap .header__cv:focus-visible,
 .gsap .idea__send--cv:hover, .gsap .idea__send--cv:focus-visible { background: none; }
