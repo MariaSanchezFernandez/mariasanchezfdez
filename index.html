@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>María Sánchez Fernández · Desarrolladora web y mobile</title>
+  <meta name="description" content="Portfolio de María Sánchez Fernández, desarrolladora web y mobile en Úbeda (Jaén). Plataformas de formación online, aplicaciones a medida y apps móviles." />
+
+  <link rel="canonical" href="https://mariasanchezfdez.es/" />
+  <meta name="theme-color" content="#0F172A" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+  <!-- Open Graph / redes sociales -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="María Sánchez Fernández · Desarrolladora web y mobile" />
+  <meta property="og:description" content="Plataformas de formación online, aplicaciones a medida y apps móviles, de la idea a producción." />
+  <meta property="og:url" content="https://mariasanchezfdez.es/" />
+  <meta property="og:image" content="https://mariasanchezfdez.es/assets/academia-bombero.webp" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "María Sánchez Fernández",
+    "jobTitle": "Desarrolladora web y mobile",
+    "url": "https://mariasanchezfdez.es/",
+    "address": { "@type": "PostalAddress", "addressLocality": "Úbeda", "addressRegion": "Jaén", "addressCountry": "ES" },
+    "knowsAbout": ["Astro", "TypeScript", "PHP", "Laravel", "PostgreSQL", "MySQL", "Node.js", "Swift", "Kotlin", "React Native"],
+    "sameAs": ["https://github.com/MariaSanchezFernandez", "https://www.linkedin.com/in/mariasanchezfernandez/"]
+  }
+  </script>
+
+  <script>document.documentElement.classList.add('js');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#proyectos">Saltar a los proyectos</a>
+
+  <!-- Pantalla de carga -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <span class="loader__brand">MSF</span>
+      <span class="loader__count"><span id="loaderCount">0</span>%</span>
+    </div>
+    <span class="loader__bola"></span>
+  </div>
+
+  <!-- Cursor: la bola -->
+  <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+
+  <!-- Sección actual -->
+  <div class="chapter-indicator" aria-hidden="true">
+    <span class="chapter-indicator__num" id="chapterNum">Inicio</span>
+    <span class="chapter-indicator__bar"><span id="chapterBar"></span></span>
+  </div>
+
+  <header id="header" class="header">
+    <a href="#inicio" class="header__logo" aria-label="Inicio">MSF</a>
+    <div class="header__right">
+      <nav aria-label="Principal">
+        <ul class="header__links">
+          <li><a class="cabecera" href="#sobre-mi">Sobre mí</a></li>
+          <li><a class="cabecera" href="#proyectos">Proyectos</a></li>
+          <li><a class="cabecera" href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <a class="header__cv js-cv" href="assets/CV_Maria_Sanchez_Fernandez.pdf" download data-cursor="CV" data-block="button"><span class="button__flair" aria-hidden="true"></span><span class="button__label">CV <span aria-hidden="true">↓</span></span></a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Portada y «Sobre mí» comparten escenario: la bola es una ventana que se abre a «Sobre mí» -->
+    <div class="intro">
+      <!-- ───────────── INICIO ───────────── -->
+      <section class="hero" id="inicio" data-chapter="Inicio">
+        <div class="hero__content">
+          <p class="hero__kicker"><span>Úbeda, Jaén</span><span>Portfolio · 2026</span></p>
+          <h1 class="hero__name">
+            <span class="hero__first" data-split>María</span>
+            <span class="hero__last" data-split>Sánchez Fernández</span>
+          </h1>
+          <div class="wrapped">
+            <span class="wrapped__lead">Desarrollo</span>
+            <span class="palabras" aria-label="iOS, Android, Web, UI/UX y Backend">
+              <span>iOS</span><span>Android</span><span>Web</span><span>UI/UX</span><span>Backend</span><span>iOS</span>
+            </span>
+          </div>
+        </div>
+        <p class="hero__hint">Scroll</p>
+        <a href="#sobre-mi" class="bola" id="bola" aria-label="Ir a Sobre mí"></a>
+      </section>
+
+      <!-- ───────────── 01 · SOBRE MÍ ───────────── -->
+      <section class="chapter chapter--dark about" id="sobre-mi" data-chapter="Sobre mí" data-theme="dark">
+        <div class="container">
+          <header class="chapter__head">
+            <span class="chapter__num">01 — Sobre mí</span>
+            <span class="chapter__year">Úbeda, Jaén</span>
+          </header>
+          <div class="about__grid">
+            <h2 class="chapter__title" data-lines>¡Hola!</h2>
+            <div class="about__body">
+              <p class="about__lead">Soy María Sánchez Fernández y me especializo en <strong>desarrollo de aplicaciones web y móviles</strong>.</p>
+              <p>Me ocupo del proyecto entero: base de datos, API, interfaz y despliegue. Me adapto rápido a nuevos entornos y tecnologías, y busco proyectos donde la tecnología resuelva problemas reales.</p>
+              <dl class="about__facts">
+                <div><dt>Experiencia</dt><dd>Desarrolladora en Cleardent · 2025 — 2026</dd></div>
+                <div><dt>Formación</dt><dd>DAM · Máster en Desarrollo con IA</dd></div>
+                <div><dt>Idiomas</dt><dd>Español e inglés</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <span class="chapter__roman" aria-hidden="true">01</span>
+      </section>
+    </div>
+
+    <!-- ───────────── 02 · EXPERIENCIA ───────────── -->
+    <section class="chapter chapter--light real" id="experiencia" data-chapter="Experiencia">
+      <div class="container">
+        <header class="chapter__head">
+          <span class="chapter__num">02 — Experiencia</span>
+          <span class="chapter__year">2023 — 2026</span>
+        </header>
+        <h2 class="chapter__title" data-lines>Experiencia y formación</h2>
+
+        <ol class="milestones">
+          <li class="milestone">
+            <p class="milestone__date">Mar 2025 — Sept 2026<small>Trabajo</small></p>
+            <span class="milestone__rail" aria-hidden="true"><span class="milestone__dot"></span><span class="milestone__line"></span></span>
+            <div class="milestone__body">
+              <h3 class="milestone__title">Desarrolladora <span>· Clínicas dentales Cleardent</span></h3>
+              <p class="milestone__text">Desarrollo en el sector salud, con estándares de calidad altos, trato directo con el cliente y proyectos con IA.</p>
+            </div>
+          </li>
+          <li class="milestone">
+            <p class="milestone__date">Sept 2025 — Ene 2026<small>Formación</small></p>
+            <span class="milestone__rail" aria-hidden="true"><span class="milestone__dot"></span><span class="milestone__line"></span></span>
+            <div class="milestone__body">
+              <h3 class="milestone__title">Máster en Desarrollo con IA <span>· Universidad Isabel I</span></h3>
+              <p class="milestone__text">Prompt engineering, automatizaciones y LLMs integrados en el flujo de desarrollo.</p>
+            </div>
+          </li>
+          <li class="milestone">
+            <p class="milestone__date">Sept 2023 — Jun 2025<small>Formación</small></p>
+            <span class="milestone__rail" aria-hidden="true"><span class="milestone__dot"></span></span>
+            <div class="milestone__body">
+              <h3 class="milestone__title">Grado Superior en DAM <span>· Escuela Estech</span></h3>
+              <p class="milestone__text">Programación, diseño y desarrollo de aplicaciones multiplataforma: Android, iOS, web y bases de datos.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <span class="chapter__roman" aria-hidden="true">02</span>
+    </section>
+
+    <!-- ───────────── 03 · PROYECTOS ───────────── -->
+    <section class="chapter chapter--dark work" id="proyectos" data-chapter="Proyectos" data-theme="dark">
+      <div class="container">
+        <header class="chapter__head">
+          <span class="chapter__num">03 — Proyectos</span>
+          <span class="chapter__year">2025 — 2026</span>
+        </header>
+        <h2 class="chapter__title" data-lines>Proyectos</h2>
+        <p class="chapter__lead">Plataformas, webs y apps desarrolladas de principio a fin: base de datos, API e interfaz.</p>
+      </div>
+
+      <div class="stack-cards">
+        <article class="scard">
+          <div class="scard__inner">
+            <header class="scard__head">
+              <span class="scard__idx">01</span>
+              <h3 class="scard__title">Academia Guía del Bombero</h3>
+              <a class="scard__go" href="https://academia.guiadelbombero.com" target="_blank" rel="noopener" data-cursor="Visitar">Visitar la academia <span>↗</span></a>
+            </header>
+            <div class="scard__body">
+              <p class="scard__kind">Plataforma de formación</p>
+              <p class="scard__text">Academia online para preparar las oposiciones de bombero. Roles de alumno, profesor y admin, temario, prácticas con penalización por preguntas en blanco, anuncios con editor de texto enriquecido y suscripciones.</p>
+              <ul class="scard__tags"><li>Astro SSR</li><li>TypeScript</li><li>Prisma</li><li>PostgreSQL</li><li>Stripe</li><li>Docker</li><li>Nginx</li></ul>
+            </div>
+            <a class="scard__media" href="https://academia.guiadelbombero.com" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true" data-cursor="Visitar">
+              <img src="assets/academia-bombero.webp" alt="" width="1400" height="789" loading="lazy" />
+            </a>
+          </div>
+        </article>
+
+        <article class="scard">
+          <div class="scard__inner">
+            <header class="scard__head">
+              <span class="scard__idx">02</span>
+              <h3 class="scard__title">cursosumme.es</h3>
+              <a class="scard__go" href="https://cursosumme.es" target="_blank" rel="noopener" data-cursor="Visitar">Visitar la web <span>↗</span></a>
+            </header>
+            <div class="scard__body">
+              <p class="scard__kind">E-learning</p>
+              <p class="scard__text">E-learning para oposiciones de Pedagogía Terapéutica: vídeo protegido con marca de agua, progreso por tema, materiales descargables, soporte y pagos con Stripe.</p>
+              <ul class="scard__tags"><li>Astro</li><li>TypeScript</li><li>PHP 8</li><li>MySQL</li><li>Stripe</li><li>VdoCipher</li><li>GSAP</li></ul>
+            </div>
+            <a class="scard__media" href="https://cursosumme.es" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true" data-cursor="Visitar">
+              <img src="assets/cursos-umme.webp" alt="" width="1117" height="882" loading="lazy" />
+            </a>
+          </div>
+        </article>
+
+        <article class="scard">
+          <div class="scard__inner">
+            <header class="scard__head">
+              <span class="scard__idx">03</span>
+              <h3 class="scard__title">Una maestra muy especial</h3>
+              <a class="scard__go" href="https://unamaestramuyespecial.es" target="_blank" rel="noopener" data-cursor="Visitar">Visitar la web <span>↗</span></a>
+            </header>
+            <div class="scard__body">
+              <p class="scard__kind">Web</p>
+              <p class="scard__text">Web de una maestra de educación especial, con recursos, materiales para el aula, proyectos educativos y preparación de oposiciones.</p>
+              <ul class="scard__tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+            </div>
+            <a class="scard__media" href="https://unamaestramuyespecial.es" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true" data-cursor="Visitar">
+              <img src="assets/maestra-especial.jpg" alt="" width="1400" height="831" loading="lazy" />
+            </a>
+          </div>
+        </article>
+
+        <article class="scard">
+          <div class="scard__inner">
+            <header class="scard__head">
+              <span class="scard__idx">04</span>
+              <h3 class="scard__title">Fichaje</h3>
+            </header>
+            <div class="scard__body">
+              <p class="scard__kind">App web</p>
+              <p class="scard__text">Registro de jornada laboral conforme al art. 34.9 del Estatuto de los Trabajadores. Los fichajes no se editan ni se borran: cada corrección queda trazada. Pensada para el móvil.</p>
+              <ul class="scard__tags"><li>Node.js</li><li>Express</li><li>SQLite</li><li>JWT</li></ul>
+            </div>
+            <div class="scard__media scard__media--art art-clock" aria-hidden="true">
+                <span class="art-clock__time">09:00</span>
+                <span class="art-clock__row"><i></i>Entrada</span>
+                <span class="art-clock__row"><i></i>Pausa</span>
+                <span class="art-clock__row"><i></i>Salida</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="scard">
+          <div class="scard__inner">
+            <header class="scard__head">
+              <span class="scard__idx">05</span>
+              <h3 class="scard__title">OlivaTour</h3>
+            </header>
+            <div class="scard__body">
+              <p class="scard__kind">App móvil</p>
+              <p class="scard__text">App para descubrir la provincia de Jaén jugando: mapa de puntos de interés, rutas por comarcas y logros con el escudo y la foto de cada pueblo.</p>
+              <ul class="scard__tags"><li>Laravel</li><li>Sanctum</li><li>React Native</li><li>Expo</li><li>Mapbox</li><li>Firebase</li></ul>
+            </div>
+            <div class="scard__media scard__media--art art-map" aria-hidden="true">
+                <span class="art-map__pin" style="--x:28%;--y:38%"></span>
+                <span class="art-map__pin" style="--x:58%;--y:24%"></span>
+                <span class="art-map__pin" style="--x:72%;--y:60%"></span>
+                <span class="art-map__pin" style="--x:40%;--y:70%"></span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ───────────── 04 · STACK ───────────── -->
+    <section class="chapter chapter--light tools" id="stack" data-chapter="Stack">
+      <div class="container">
+        <header class="chapter__head">
+          <span class="chapter__num">04 — Stack</span>
+          <span class="chapter__year">Tecnologías</span>
+        </header>
+        <h2 class="chapter__title" data-lines>Con qué trabajo</h2>
+        <p class="chapter__lead">Las tecnologías con las que trabajo en mis proyectos, de la base de datos a la app.</p>
+      </div>
+      <div class="marquee" data-direction="1">
+        <div class="marquee__track">
+          <span>Astro</span><i>●</i><span>TypeScript</span><i>●</i><span>Laravel</span><i>●</i><span>React Native</span><i>●</i><span>Node.js</span><i>●</i><span>PostgreSQL</span><i>●</i><span>Stripe</span><i>●</i><span>Docker</span><i>●</i>
+        </div>
+      </div>
+      <div class="marquee marquee--outline" data-direction="-1">
+        <div class="marquee__track">
+          <span>PHP</span><i>●</i><span>Prisma</span><i>●</i><span>Expo</span><i>●</i><span>Kotlin</span><i>●</i><span>MySQL</span><i>●</i><span>Express</span><i>●</i><span>GSAP</span><i>●</i><span>Figma</span><i>●</i>
+        </div>
+      </div>
+      <div class="container">
+        <div class="tech">
+          <div class="tech__group">
+            <h3 class="tech__title">Frontend</h3>
+            <ul class="tech__list">
+              <li>Astro</li>
+              <li>TypeScript</li>
+              <li>JavaScript</li>
+              <li>HTML &amp; CSS</li>
+              <li>GSAP</li>
+              <li>Bootstrap</li>
+            </ul>
+          </div>
+          <div class="tech__group">
+            <h3 class="tech__title">Mobile</h3>
+            <ul class="tech__list">
+              <li>React Native</li>
+              <li>Expo</li>
+              <li>Kotlin</li>
+              <li>Swift</li>
+              <li>Android Studio</li>
+            </ul>
+          </div>
+          <div class="tech__group">
+            <h3 class="tech__title">Backend</h3>
+            <ul class="tech__list">
+              <li>Node.js</li>
+              <li>Express</li>
+              <li>PHP 8</li>
+              <li>Laravel</li>
+              <li>Prisma</li>
+              <li>Zod</li>
+            </ul>
+          </div>
+          <div class="tech__group">
+            <h3 class="tech__title">Datos</h3>
+            <ul class="tech__list">
+              <li>PostgreSQL</li>
+              <li>MySQL / MariaDB</li>
+              <li>SQLite</li>
+              <li>Firebase</li>
+            </ul>
+          </div>
+          <div class="tech__group">
+            <h3 class="tech__title">Servicios</h3>
+            <ul class="tech__list">
+              <li>Stripe</li>
+              <li>VdoCipher</li>
+              <li>Almacenamiento S3</li>
+              <li>Mapbox</li>
+              <li>Nodemailer</li>
+            </ul>
+          </div>
+          <div class="tech__group">
+            <h3 class="tech__title">Infraestructura y calidad</h3>
+            <ul class="tech__list">
+              <li>Docker</li>
+              <li>Nginx</li>
+              <li>Infisical</li>
+              <li>Railway · Vercel</li>
+              <li>Vitest · Playwright</li>
+              <li>Figma</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── 05 · CONTACTO ───────────── -->
+    <section class="epilogo contact" id="contacto" data-chapter="Contacto" data-theme="dark">
+      <div class="container">
+        <header class="chapter__head">
+          <span class="chapter__num">05 — Contacto</span>
+          <span class="chapter__year"><span class="pulse" aria-hidden="true"></span>Disponible para proyectos</span>
+        </header>
+
+        <div class="idea">
+          <div class="idea__top">
+            <h2 class="idea__title" data-lines>Cuéntame tu idea</h2>
+            <p class="idea__hint">Rellena los huecos y envíamelo por email o WhatsApp.</p>
+          </div>
+
+          <form class="idea__form" id="ideaForm" novalidate>
+            <p class="idea__sentence">
+              Hola María, soy
+              <label class="idea__field"><span class="sr-only">Tu nombre</span><input id="ideaName" type="text" placeholder="tu nombre" autocomplete="given-name" maxlength="30" spellcheck="false" /></label>
+              y necesito
+              <label class="idea__field"><span class="sr-only">Qué necesitas</span><input id="ideaWhat" type="text" placeholder="una web, una app…" maxlength="60" /></label>
+              para
+              <label class="idea__field"><span class="sr-only">Para qué o para quién</span><input id="ideaFor" type="text" placeholder="mi negocio, mi academia…" maxlength="60" /></label>.
+            </p>
+
+            <div class="idea__actions">
+              <a class="idea__send" id="ideaMail" href="mailto:sanchez.fdez.maria@gmail.com">Enviar por email <span aria-hidden="true">→</span></a>
+              <a class="idea__send idea__send--ghost" id="ideaWa" href="https://wa.me/34681085558" target="_blank" rel="noopener">WhatsApp</a>
+              <a class="idea__send idea__send--cv js-cv" href="assets/CV_Maria_Sanchez_Fernandez.pdf" download data-block="button"><span class="button__flair" aria-hidden="true"></span><span class="button__label">Descargar CV <span aria-hidden="true">↓</span></span></a>
+            </div>
+
+            <p class="idea__alt">
+              ¿Prefieres escribirme tú?
+              <button type="button" class="idea__copy" id="copyEmail" data-email="sanchez.fdez.maria@gmail.com">Copiar mi email</button>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───────────── FOOTER ───────────── -->
+  <footer class="site-footer" data-theme="dark">
+    <div class="site-footer__inner">
+      <div class="site-footer__cols">
+        <div class="fcol">
+          <h3 class="fcol__title">Estado</h3>
+          <p class="fcol__status"><span class="pulse" aria-hidden="true"></span>Disponible para proyectos</p>
+          <p class="fcol__text">Úbeda, Jaén · <time id="localTime">--:--</time> hora local</p>
+        </div>
+        <nav class="fcol" aria-label="Secciones">
+          <h3 class="fcol__title">Secciones</h3>
+          <ul>
+            <li><a href="#sobre-mi">Sobre mí</a></li>
+            <li><a href="#experiencia">Experiencia</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#stack">Stack</a></li>
+          </ul>
+        </nav>
+        <div class="fcol">
+          <h3 class="fcol__title">Contacto</h3>
+          <ul>
+            <li><a href="mailto:sanchez.fdez.maria@gmail.com">sanchez.fdez.maria@gmail.com</a></li>
+            <li><a href="https://api.whatsapp.com/send?phone=34681085558" target="_blank" rel="noopener">WhatsApp · +34 681 08 55 58</a></li>
+            <li><a class="js-cv" href="assets/CV_Maria_Sanchez_Fernandez.pdf" download>Descargar CV ↓</a></li>
+          </ul>
+        </div>
+        <div class="fcol">
+          <h3 class="fcol__title">Redes</h3>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/mariasanchezfernandez/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+            <li><a href="https://github.com/MariaSanchezFernandez" target="_blank" rel="noopener">GitHub ↗</a></li>
+          </ul>
+        </div>
+        <a href="#inicio" class="to-top magnetic" data-cursor="Arriba" aria-label="Volver arriba">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+        </a>
+      </div>
+
+      <p class="site-footer__word" aria-hidden="true">
+        <span class="w-bold">María</span> <span class="w-thin">Sánchez</span>
+      </p>
+
+      <div class="site-footer__bottom">
+        <span>© <span id="year">2026</span> María Sánchez Fernández</span>
+        <span>¡Muchas gracias por visitar mi portfolio web!</span>
+        <span>Diseñado y programado por mí<button class="secret-dot" type="button" aria-label="Un secreto"></button></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" integrity="sha384-xb96EMJeax+NLXMC88ZBa1xAeAW+kn+horHh/zFlbMLG2UPWhMJJSlv7fi57hS+Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" integrity="sha384-FKTX0CNJ8ngN1oGMBReVu7mvjTJyjFiD5etb1NKnYxc+8eFI2O0KWnksTN+oTFcu" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" integrity="sha384-sPwMflxqfAN+Q5mvlkLmHiX3PORGbZSXHiSGPTXT9VHCD/AB+b+r+vJWsqprv+7k" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>
