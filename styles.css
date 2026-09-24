@@ -308,6 +308,8 @@ html:not(.gsap) .palabras span { animation: spin_words 10s infinite; }
 .about__lead { font-size: clamp(24px, 2.8vw, 38px); font-weight: 300; line-height: 1.25; letter-spacing: -0.02em; }
 .about__lead strong { font-weight: 700; color: var(--green); }
 .about__body > p + p { margin-top: 24px; font-size: 17px; line-height: 1.7; color: var(--w-2); max-width: 52ch; }
+.about__body > p + p strong { color: var(--white); font-weight: 600; }
+.about__body > p + p + p { margin-top: 14px; }
 .about__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--w-line); }
 .about__facts div { padding: 20px 20px 0 0; }
 .about__facts dt { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--w-3); }
