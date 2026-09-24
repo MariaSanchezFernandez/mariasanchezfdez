@@ -55,17 +55,19 @@ function fitFooterWord() {
 document.fonts.ready.then(fitFooterWord);
 window.addEventListener('resize', fitFooterWord);
 
+let lenis = null; // scroll suave; lo crea init() si hay GSAP
+
 if (hasGsap && !reduceMotion) {
   document.documentElement.classList.add('gsap');
   document.fonts.ready.then(init);
 }
 setupIdea();
+setupMenu();
 
 function init() {
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
   /* ─── Scroll suave (Lenis) sincronizado con ScrollTrigger ─── */
-  let lenis = null;
   if (window.Lenis) {
     lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 1 });
     lenis.on('scroll', ScrollTrigger.update);
@@ -254,6 +256,7 @@ function setupHero() {
 
 /* ─── ¿Hay fondo marino en este punto de la pantalla? ────────── */
 function isDarkAt(x, y) {
+  if (document.documentElement.classList.contains('menu-open')) return true; // el menú del móvil es marino
   const c = headerTheme.circle;
   // El footer está fijo detrás de todo: solo se ve (y cuenta) por debajo del final del contacto
   const footer = $('.site-footer');
@@ -281,7 +284,7 @@ function setupHeaderTheme() {
   const update = () => {
     // Se mira el fondo justo debajo del logo y de los enlaces
     const y = header.offsetHeight / 2;
-    const dark = isDarkAt(innerWidth / 2, y) || isDarkAt(innerWidth - 120, y);
+    const dark = document.documentElement.classList.contains('menu-open') || isDarkAt(innerWidth / 2, y) || isDarkAt(innerWidth - 120, y);
     header.classList.toggle('on-dark', dark);
   };
   ScrollTrigger.create({ start: 0, end: 'max', onUpdate: update, onRefresh: update });
@@ -608,6 +611,46 @@ function setupMagnetic() {
     });
     el.addEventListener('mouseleave', () => gsap.to(el, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.35)' }));
   });
+}
+
+/* ─── Menú del móvil ──────────────────────────────────────────
+ * Se abre como la bola: un círculo marino que crece desde el botón (en CSS).
+ * Funciona también sin GSAP. */
+function setupMenu() {
+  const btn = $('#menuBtn');
+  const menu = $('#menu');
+  if (!btn || !menu) return;
+  const root = document.documentElement;
+  const label = $('.header__menu-label', btn);
+  const links = $$('.menu__links a', menu);
+
+  const toggle = open => {
+    if (open === root.classList.contains('menu-open')) return;
+    const r = $('.header__menu-dot', btn).getBoundingClientRect();
+    menu.style.setProperty('--mx', r.left + r.width / 2 + 'px');
+    menu.style.setProperty('--my', r.top + r.height / 2 + 'px');
+    root.classList.toggle('menu-open', open);
+    menu.inert = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    label.textContent = open ? 'Cerrar' : 'Menú';
+    if (open) {
+      lenis?.stop();
+      // Resalta la sección en la que estás
+      const here = $$('main section[id]').find(s => { const b = s.getBoundingClientRect(); return b.top <= innerHeight / 2 && b.bottom > innerHeight / 2; });
+      links.forEach(a => a.classList.toggle('is-current', !!here && a.getAttribute('href') === '#' + here.id));
+      setTimeout(() => links[0].focus({ preventScroll: true }), 350);
+    } else {
+      lenis?.start();
+    }
+  };
+
+  btn.addEventListener('click', () => toggle(!root.classList.contains('menu-open')));
+  // Al elegir una sección se cierra el menú y el scroll lo hace el manejador de los enlaces internos
+  $$('a', menu).forEach(a => a.addEventListener('click', () => toggle(false)));
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && root.classList.contains('menu-open')) { toggle(false); btn.focus(); }
+  });
+  matchMedia('(min-width: 701px)').addEventListener('change', e => e.matches && toggle(false));
 }
 
 /* ─── Contacto: «Cuéntame tu idea» ────────────────────────────
