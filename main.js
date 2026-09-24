@@ -202,6 +202,10 @@ function setupHero() {
     about.style.clipPath = circle.open ? 'none' : `circle(${circle.r}px at ${circle.cx}px ${circle.cy}px)`;
     about.style.pointerEvents = circle.r > circle.r0 * 3 || circle.open ? '' : 'none';
   };
+  const aboutFits = () => about.offsetHeight <= innerHeight + 2;
+  let OPEN = 0.7; // parte del recorrido que tarda la bola en llenar la pantalla
+  ScrollTrigger.addEventListener('refreshInit', () => { OPEN = aboutFits() ? 0.9 / 1.3 : 1; });
+  OPEN = aboutFits() ? 0.9 / 1.3 : 1;
   const grow = gsap.parseEase('power2.in');
   measure();
   circle.r = 0; // antes de hacer scroll solo se ve la bola de verdad (que entra rebotando)
@@ -212,9 +216,9 @@ function setupHero() {
     scrollTrigger: {
       trigger: '.intro',
       start: 'top top',
-      // La bola se abre en el primer 70 % del recorrido; el resto es una pausa en la que no pasa
-      // nada, para que «Sobre mí» se quede quieto un momento antes de seguir bajando
-      end: '+=130%',
+      // La bola se abre en 90 % de pantalla de scroll; después, si «Sobre mí» cabe entero,
+      // una pausa de 40 % en la que no pasa nada. Si no cabe, sin pausa (no se queda cortado)
+      end: () => '+=' + Math.round(innerHeight * (0.9 + (aboutFits() ? 0.4 : 0))),
       pin: true,
       scrub: true,
       invalidateOnRefresh: true,
@@ -231,7 +235,6 @@ function setupHero() {
     // 2) La bola se convierte en la ventana y crece hasta llenar la pantalla (ver setCircle)
     .set({}, {}, 1);
 
-  const OPEN = 0.7; // parte del recorrido que tarda la bola en llenar la pantalla
   const content = $('.container', about);
   const roman = $('.chapter__roman', about);
   function setCircle(p) {

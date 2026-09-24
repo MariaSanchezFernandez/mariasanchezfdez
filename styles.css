@@ -237,6 +237,7 @@ em { font-style: italic; }
   /* Siempre al menos una pantalla: en monitores altos no debe quedar la portada asomando debajo */
   min-height: 100vh; min-height: 100svh;
   display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(72px, 11vh, 120px) 0 clamp(32px, 6vh, 80px); /* margen según el alto, para que quepa entero */
 }
 .gsap .intro > #sobre-mi > .container { width: 100%; }
 .hero__kicker {
@@ -308,7 +309,16 @@ html:not(.gsap) .palabras span { animation: spin_words 10s infinite; }
 }
 .chapter__lead { margin-top: 32px; max-width: 46ch; font-size: clamp(17px, 1.6vw, 21px); line-height: 1.6; color: var(--ink-2); }
 
-.about__grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+.about__grid {
+  display: grid; grid-template-columns: 1fr 1.4fr; column-gap: clamp(32px, 6vw, 96px); align-items: start;
+  /* «¡Hola!» y los datos a la izquierda, el texto a la derecha: así cabe en una pantalla */
+  grid-template-areas: "title body" "facts body";
+  grid-template-rows: auto 1fr;
+}
+.about__grid > .chapter__title { grid-area: title; }
+.about__grid > .about__body { grid-area: body; }
+.about__grid > .about__facts { grid-area: facts; align-self: end; grid-template-columns: 1fr; margin-top: 40px; }
+.about__grid > .about__facts div { padding: 16px 0; border-bottom: 1px solid var(--w-line); }
 .about__lead { font-size: clamp(24px, 2.8vw, 38px); font-weight: 300; line-height: 1.25; letter-spacing: -0.02em; }
 .about__lead strong { font-weight: 700; color: var(--green); }
 .about__body > p + p { margin-top: 24px; font-size: 17px; line-height: 1.7; color: var(--w-2); max-width: 52ch; }
@@ -319,7 +329,7 @@ html:not(.gsap) .palabras span { animation: spin_words 10s infinite; }
 .about__facts dt { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--w-3); }
 .about__facts dd { margin-top: 8px; font-size: 16px; font-weight: 500; line-height: 1.4; }
 @media (max-width: 860px) {
-  .about__grid { grid-template-columns: 1fr; }
+  .about__grid { grid-template-columns: 1fr; grid-template-areas: "title" "body" "facts"; grid-template-rows: auto; row-gap: 24px; }
   .about__facts { grid-template-columns: 1fr; }
   .about__facts div { padding: 16px 0; border-bottom: 1px solid var(--w-line); }
 }
